@@ -64,7 +64,7 @@ void swap(int array[], int i, int j) {
 void bubble_sort(int array[], int size) {
     for(int i = 0 ; i < size - 1 ; i++){
 	int flag = 0;
-        for(int j = 0 ; j <size - i - 1 ; j++) {
+        for(int j = 0 ; j < size - i - 1 ; j++) {
 	    if(array[j] > array[j+1]){
 	        swap(array, j, j+1);
 		flag = 1; 
