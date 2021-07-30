@@ -2,7 +2,7 @@
  * Program to analyze run time complexity of Selection Sort
  * Compilation- gcc -o selection_sort selection_sort.c
  * Execution- ./selection_sort
- * Dushyant Batra,(1910990098),26/07/2021
+ * Dushyant Batra,(1910990098),30/07/2021
  * Assignment - 2
  */
 
