@@ -54,7 +54,10 @@ void selection_sort(int i, int a[], int size) {
 
 
 // finds the index of minimum element in the array starting from index i.
-// param : int index : index of the array currently at which we are, int a[] : (array of integers), int size : size of array
+// parameters : 
+// int index : index of the array currently at which we are
+// int a[] : (array of integers)
+// int size : size of array
 // return : void
 int findMinimumIndex(int i, int a[], int size) {
     if(i == size - 1) {
