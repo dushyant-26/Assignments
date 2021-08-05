@@ -14,6 +14,7 @@ int stack_size = 0;
 
 // checks whether stack is empty or not.
 // return int: return 1 if stack is empty else return 0
+// TC -> O(1)
 int isEmpty() {
     if(top == -1) {
         return 1;
@@ -23,6 +24,7 @@ int isEmpty() {
 
 //resize the size of stack
 //return void
+//TC -> O(n)
 void resize_stack() {
     stack_size *= 2;
     stack = (int*) realloc(stack, stack_size);
@@ -32,6 +34,7 @@ void resize_stack() {
 // parameters:
 // int num: integer number that we want to push.
 // return void
+// TC -> O(1)
 void push(int num) {
     if(top == stack_size - 1) {
         resize_stack();
@@ -41,6 +44,7 @@ void push(int num) {
 
 //remove top element from stack and return it
 //return int: removed element
+//TC -> O(1)
 int pop() {
     if(isEmpty() == 1) {
         printf("Stack is Empty\n");
@@ -50,6 +54,7 @@ int pop() {
 }
 
 //return top element of stack
+//TC -> O(1)
 int peek() {
     if(isEmpty() == 1) {
         printf("Stack is Empty\n");
@@ -60,6 +65,7 @@ int peek() {
 
 //print values in stack
 //return void
+//TC -> O(n)
 void print() {
     if(isEmpty() == 1) {
         printf("Stack is Empty\n");
