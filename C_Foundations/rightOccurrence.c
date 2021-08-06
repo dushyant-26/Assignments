@@ -13,7 +13,7 @@
 //char* s: first input string
 //char* t: second input string
 //return int: right most position of t in s.
-int rightPosition(char*s, char* t) {
+int strrindex(char*s, char* t) {
     int found = 0;
     int position = -1;
 
@@ -44,6 +44,6 @@ int main (void) {
     printf("Enter the substring to find:\n");
     scanf(" %[^\n]s",t);
 
-    printf("RightMost Occurrence of given substring is %d\n",rightPosition(str,t));
+    printf("RightMost Occurrence of given substring is %d\n",strrindex(str,t));
     return 1;
 }

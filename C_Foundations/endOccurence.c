@@ -25,7 +25,7 @@ int stringLength(char* str) {
 //char* s: first string
 //char* t: second string
 //return int:return 1,if t is present at end of s else return 0.
-int presentAtEnd(char*s, char* t) {
+int strend(char*s, char* t) {
     int present = 0;
     int s_length = stringLength(s);
     int t_length = stringLength(t);
@@ -55,7 +55,7 @@ int main (void) {
     printf("Enter the substring to find:\n");
     scanf(" %[^\n]s",t);
 
-    printf("%d\n" ,presentAtEnd(str,t));
+    printf("%d\n" ,strend(str,t));
     return 1;
 }
 

@@ -13,7 +13,7 @@
 //char* s1: first input string
 //char* s2:second input string
 //return int: position of first character matched.
-int position_any_character(char* s1, char* s2) {
+int any(char* s1, char* s2) {
     
     for(int i = 0; s1[i] != '\0' ;i++) {
         for(int j = 0; s2[j] != '\0' ;j++) {
@@ -35,6 +35,6 @@ int main (void) {
     printf("Enter the substring to find:\n");
     scanf(" %[^\n]s",t);
 
-    printf("%d\n" ,position_any_character(str,t));
+    printf("%d\n" ,any(str,t));
     return 1;
 }

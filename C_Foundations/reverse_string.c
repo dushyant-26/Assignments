@@ -23,7 +23,7 @@ int string_length(char* str) {
 //parameter:
 //char* str: input string
 //return void
-void reverse_string(char* str) {
+void reverse(char* str) {
     int str_length = string_length(str);
 
     for(int i = 0; i < str_length / 2 ; i++) {
@@ -39,7 +39,7 @@ int main (void) {
     printf("Enter the string\n");
     scanf("%[^\n]s",str);
 
-    reverse_string(str);
+    reverse(str);
 
     printf("Reversed string:\n");
     printf("%s\n",str);
