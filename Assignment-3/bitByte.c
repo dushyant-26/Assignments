@@ -49,7 +49,7 @@ int getByte(int x,int n) {
 //int n: right shift by how many places
 //return int: logical x >> n
 int logicalShift(int x, int n) {
-    return ((x >> n) & ~((1 << 31) >> n) << 1);
+    return ((x >> n) & ~(((1 << 31) >> n) << 1));
 }
 
 //perform bang operator without using ! operator.
@@ -86,10 +86,16 @@ int conditional(int x, int y, int z) {
 
 
 int main (void) {
+    printf("%d\n",bitAnd(6,5));
+    printf("%d\n",bitXor(4,5));
     printf("%d\n",bitSign(-10));
-
     printf("%d\n",bitSign(10));
-
     printf("%d\n",bitSign(0));
+    printf("%d\n",getByte(305419896,1));
+    printf("%d\n",logicalShift(-10,29));
+    printf("%d\n",conditional(2,3,4));
+    printf("%d\n",bang(10));
+    printf("%d\n",bang(0));
+    printf("%d\n",invert(20,1,3));
     return 1;
 }
