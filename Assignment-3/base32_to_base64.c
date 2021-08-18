@@ -1,3 +1,11 @@
+/*
+ * Program with solution to Ques 9
+ * Compilation- gcc -o base32_to_base64 base32_to_base64.c
+ * Execution- ./base32_to_base64
+ * Dushyant Batra, (1910990098), 18/08/2021
+ * Assignment 3 (Bits and Bytes)
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
