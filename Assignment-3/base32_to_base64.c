@@ -6,129 +6,132 @@
  * Assignment 3 (Bits and Bytes)
  */
 
-#include <stdio.h>
+#include<stdio.h>
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
 
-char ch2base32(char c)
-{
-    if(c>='A' && c<='Z')
-    {
-        return c-'A';
+//returns the character corresponding to given binary representation in base 64.
+//params:
+//char* temp: string containing all bits.
+//int start:the position from where this character in base 64 starts
+//int end:the position where the character ends.
+//return char:character corresponding to given binary representation in base 64.
+char base64(char* temp, int start, int end) {
+    int val = 0;
+
+    for(int i = start; i < end; i++) {
+        val = val * 2 + (temp[i] - '0');
     }
-    else if(c>='2'&& c<='7')
-    {
-        return c-'2'+26;
+    if(val < 26) {
+        val = val + 65;
     }
-    else
-    {
-        //seems error?
-        // == pad?
-        return 32;
+    else if(val < 52) {
+        val = val + 71;
     }
+    else if(val < 62) {
+        val = val - 4;
+    }
+    else if(val == 62) {
+        val = val - 19;
+    }
+    else {
+        val = val - 16;
+    }
+    return val;
 }
 
-char base642ch( char b)
-{
-    if(b>=0 && b<=25)
-    {
-        return b+'A'-0;
+//returns binary representation of given integer.
+//params:
+//int val: integer value
+//return char*: string with binary representation of given integer.
+char* binary_representation(int val) {
+    char* res = (char*)malloc(5*sizeof(int));
+    int i = 4;
+
+    while(val > 0) {
+        res[i--] = (val % 2) + '0';
+        val /= 2;
     }
-    if(b>=26 && b<= 51)
-    {
-        return b+'a'-26;
+    while(i >= 0) {
+        res[i--] = '0';
     }
-    else if(b>=52 && b<=61)
-    {
-        return b+'0'-52;
+    return res;
+}
+
+//returns binary representation of given in character in base 32.
+//params:
+//char ch: character in base 32 format
+//return char*: string with binary representation of given integer. 
+char* base32_to_binary(char ch) {
+    int val;
+    if(ch >= 'A' && ch <= 'Z') {
+        val = ch - 65;
     }
-    else if(b==62)
-    {
-        return '+';
+    else if(ch >= '2' && ch <= '7') {
+        val = ch - 24;
     }
-    else if(b==63)
-    {
-        return '/';
+    else {
+        return NULL;
     }
-    else 
-    {
-        return '$';
+    return binary_representation(val);
+}
+
+//prints base 64 string corresponding to given base 32 string
+//params:
+//char* str: string in base 32 format
+//return void
+void get_base64_from_base32(char* str) {
+    int str_length = strlen(str);
+    char temp[1000] = {'\0'};
+    for(int i = 0; i < str_length; i++) {
+        char* res = base32_to_binary(str[i]);
+        if(res != NULL) {
+            strcat(temp,res);
+            free(res);
+        }
     }
+    int binary_length = strlen(temp);
+
+    binary_length = (binary_length / 8) * 8;
+    temp[binary_length] = '\0';
+    
+    //variable which stores no. of 0 to be added at end.
+    int pad = binary_length % 6;
+    if(pad != 0) {
+        pad = 6 - pad;
+    }
+
+    for(int i = 0; i < pad; i++) {
+        strcat(temp,"0");
+    }
+
+    //variable which stores no. of = to be added at end.
+    int equals = (strlen(temp) / 6) % 4;
+    if(equals != 0) {
+        equals = 4 - (equals % 4);
+    }
+
+    for(int i = 0; i < strlen(temp); i += 6) {
+        printf("%c", base64(temp, i , i+6));
+    }
+    for(int i = 0; i < equals; i++) {
+        printf("=");
+    }
+    printf("\n");
+
 }
 
 int main() {
+    int n;
+    scanf("%d",&n);
 
-    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
-    int round;
-    scanf("%d", &round);
-    char str[1001];
-    char orginal[1001];
-    char output[1001];
-    for(int i=0; i<round; i++)
-    {
-        for(int j=0; j<1001; j++)
-        {
-            str[j]=0;
-            orginal[j]=0;
-            output[j]=0;
-        }
+    while(n-- > 0) {
+        char str[1000];
+
         scanf("%s",str);
-        int len = strlen(str);
-        int pad=0;
-        int po=0;
-        int pout=0;
-        for(int j=0; j< len; j+=8)
-        {
-            long long temp = 0;
-            for(int k=0; k<8; k++)
-            {
-                int ch = ch2base32(str[j+k]);
-                if(ch == 32)
-                {
-                    pad++;
-                    ch = 0;
-                }
-                temp = (temp<<5) + ch;
-                
-            }
-            
-            for(int k=4; k>=0; k--)
-            {
-                orginal[po+k] = temp&0xFF;
-                temp = temp>>8;
-            }
-            po +=5;
-        }
-        if(pad == 6)
-            po -=4;
-        else if(pad == 4)
-            po -= 3;
-        else if(pad ==3)
-            po -= 2;
-        else if(pad == 1)
-            po -= 1;
-        pad = po%3;
-        if(pad!=0)
-            pad = 3-pad;
-        for(int j = 0; j<po; j+=3)
-        {
-            long long temp = 0;
-            for(int k=0; k<3; k++)
-            {
-                temp = (temp<<8) + orginal[j+k];
-            }
-            
-            for(int k=3; k>=0; k--)
-            {
-                output[pout+k] = base642ch(temp&0x3F);
-                temp = temp>>6;
-            }
-            pout+=4;
-        }
-        for(int k=1; k<=pad;k++)
-            output[pout-k] = '=';
-        printf("%s\n",output);
+        get_base64_from_base32(str);
     }
-    return 0;
 }
+
+
