@@ -87,22 +87,50 @@ int peek(Stack* st) {
 //int heightsSize: size of given array
 //return int: greatest rectangle area
 int largestRectangleArea(int* heights, int heightsSize){
-    int maxArea = 0;
-    
     Stack* stack = createStack();
-
-    for(int i = 0; i <= heightsSize; i++) {
-        while(isEmpty(stack) == 0 && (i == heightsSize || heights[peek(stack)] > heights[i])) {
-            int height = heights[pop(stack)];
-            int leftSmaller = isEmpty(stack) == 0 ? peek(stack) : -1;
-            int width = i - leftSmaller - 1;
-
-            int area = height * width;
-            maxArea = area > maxArea ? area : maxArea;
+    
+    int rb[heightsSize];
+    rb[heightsSize - 1] = heightsSize;
+    push(stack,heightsSize - 1);
+    for(int i = heightsSize - 2; i >= 0; i--) {
+        while(!isEmpty(stack) && heights[i] <= heights[peek(stack)]) {
+            pop(stack);
         }
-
-        push(stack, i);
+        if(isEmpty(stack) == 1) {
+            rb[i] = heightsSize;
+        }
+        else {
+            rb[i] = peek(stack);
+        }
+        push(stack,i);
     }
+    
+    stack = createStack();
+    int lb[heightsSize];
+    lb[0] = -1;
+    push(stack,0);
+    for(int i = 1; i < heightsSize; i++) {
+        while(!isEmpty(stack) && heights[i] <= heights[peek(stack)]) {
+            pop(stack);
+        }
+        if(isEmpty(stack) == 1) {
+            lb[i] = -1;
+        }
+        else {
+            lb[i] = peek(stack);
+        }
+        push(stack,i);
+    }
+    int maxArea = 0;
 
+    for(int i = 0; i < heightsSize; i++) {
+        int width = rb[i] - lb[i] - 1;
+        int area = width * heights[i];
+        
+        if(area > maxArea) {
+            maxArea = area;
+        }
+    }
     return maxArea;
 }
+
